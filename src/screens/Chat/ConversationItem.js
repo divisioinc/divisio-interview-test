@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import { smoke, white, blue } from '../../style-guide/colors'
 import { fromDate } from '../../utils/date'
 import { Text } from '../../style-guide'
 
@@ -11,14 +10,14 @@ const StyledConversationItem = styled.div`
   padding: 10px 15px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${smoke};
+  border-bottom: 1px solid #e4ebf9;
   justify-content: space-between;
   cursor: pointer;
   transition: background-color .1s ease-in;
-  background-color: ${({ isSelected }) => isSelected ? smoke : white};
+  background-color: ${({ isSelected }) => isSelected ? '#e4ebf9' : '#ffffff'};
 
   &:hover {
-    background-color: ${smoke};
+    background-color: #e4ebf9;
   }
 `
 
@@ -36,11 +35,11 @@ const StyledDateCount = styled.div`
 
 const StyledCounter = styled.span`
   margin-top: 10px;
-  background-color: ${blue};
+  background-color: #6babf5;
   border-radius: 20px;
   height: 20px;
   width: 20px;
-  color: white;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;

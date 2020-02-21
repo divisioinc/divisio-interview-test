@@ -1,15 +1,14 @@
 /* @flow */
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { string } from 'prop-types'
 import styled from 'styled-components'
 import shortId from 'shortid'
+import axios from 'axios'
 
 import sendIcon from '../../assets/send.svg'
 
 import { IsLoading, Input } from '../../style-guide'
-import { graySemiLight } from '../../style-guide/colors'
-
-import api from '../../utils/api'
 
 import MessageItem from './MessageItem'
 
@@ -43,78 +42,91 @@ const StyledFooter = styled.div`
   display: flex;
   width: 100%;
   padding: 10px 15px;
-  background-color: ${graySemiLight};
+  background-color: #edeced;
 `
 
-type Props = {
-  conversationId: string
-}
+class Messages extends React.Component {
 
-const useFetchMessages = (conversationId: string) => {
-  const [isFetching, setFetching] = useState(false)
-  const [messages, setMessages] = useState([])
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      setFetching(true)
-
-      const { data: { data: { messages } } } = await api.get(`/conversations/${conversationId}`)
-
-      setMessages(messages)
-      setFetching(false)
-    }
-
-    fetchMessages()
-  }, [conversationId])
-
-  return { isFetching, messages, setMessages }
-}
-
-const Messages = ({ conversationId }: Props) => {
-  const { isFetching, messages, setMessages } = useFetchMessages(conversationId)
-  const [text, setText] = useState('')
-
-  const createMessage = () => {
-    if (!text) return
-
-    setText('')
-    setMessages([
-      ...messages,
-      {
-        uuid: shortId.generate(),
-        body: text,
-        direction: 'outgoing',
-        created_at: new Date().toISOString()
-      }
-    ])
+  static propTypes = {
+    conversationId: string
   }
 
-  return (
-    <StyledMessages>
-      <IsLoading loading={isFetching}>
-        <MessagesContainer>
-          {messages.map(({ uuid, body, direction }) => (
-            <MessageItem
-              key={uuid}
-              message={body}
-              direction={direction}
-            />
-          ))}
-        </MessagesContainer>
-      </IsLoading>
-      <StyledFooter>
-        <Input
-          value={text}
-          onChange={({ target: { value } }) => setText(value)}
-          onEnter={createMessage}
-          placeholder='Type a message'
-        />
-        <StyledSendButton onClick={createMessage}>
-          <StyledIcon src={sendIcon} />
-        </StyledSendButton>
-      </StyledFooter>
-    </StyledMessages>
-  )
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      text: '',
+      messages: [],
+      isFetching: false
+    }
+
+    this.createMessage = this.createMessage.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.conversationId !== nextProps.conversationId) {
+      this.setState({
+        isFetching: true
+      })
+
+      axios.get(`/conversations/${this.props.conversationId}`).then((response) => {
+        const { data: { data: { messages } } } = response
+        
+        this.setState({
+          messages,
+          isFetching: false
+        })
+      })
+    }
+  }
+
+  createMessage = () => {
+    if (!this.state.text) return
+
+    this.setState({
+      text: '',
+      messages: [
+        ...this.state.messages,
+        {
+          uuid: shortId.generate(),
+          body: this.state.text,
+          direction: 'outgoing',
+          created_at: new Date().toISOString()
+        }
+      ]
+    })
+  }
+
+  render() {
+    const { text, messages, isFetching } = this.state
+
+    return (
+      <StyledMessages>
+        <IsLoading loading={isFetching}>
+          <MessagesContainer>
+            {messages.map(({ uuid, body, direction }) => (
+              <MessageItem
+                key={uuid}
+                message={body}
+                direction={direction}
+              />
+            ))}
+          </MessagesContainer>
+        </IsLoading>
+        <StyledFooter>
+          <Input
+            value={text}
+            onChange={({ target: { value } }) => this.setState({ text: value })}
+            onEnter={this.createMessage}
+            placeholder='Type a message'
+          />
+          <StyledSendButton onClick={this.createMessage}>
+            <StyledIcon src={sendIcon} />
+          </StyledSendButton>
+        </StyledFooter>
+      </StyledMessages>
+    )
+  }
 }
 
 export default Messages

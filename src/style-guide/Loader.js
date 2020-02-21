@@ -3,8 +3,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { blue } from './colors'
-
 const StyledLoader = styled.div`
   width: 100%;
   height: 100%;
@@ -19,7 +17,7 @@ type Props = {
   color?: string
 }
 
-const Loader = ({ width = 50, height = 50, color = blue }: Props) => (
+const Loader = ({ width = 50, height = 50, color = '#6babf5' }: Props) => (
   <StyledLoader>
     <svg
       width={width}

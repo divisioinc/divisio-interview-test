@@ -2,8 +2,6 @@ import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import { grayLight } from './style-guide/colors'
-
 import Chat from './screens/Chat'
 
 const GlobalStyle = createGlobalStyle`
@@ -14,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: ${grayLight};
+    background-color: #f6f6ff;
   }
 
   html, body {
