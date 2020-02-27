@@ -3,11 +3,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { white, blue, black } from './colors'
 import Text from './Text'
 
 const StyledBubble = styled.div`
-  background-color: ${({ direction }) => direction === 'incoming' ? white : blue};
+  background-color: ${({ direction }) => direction === 'incoming' ? '#ffffff' : '#6babf5'};
   width: 30%;
   padding: 10px;
   border-radius: 6px;
@@ -26,7 +25,7 @@ const Bubble = ({ value, direction, style }: Props) => (
   >
     <Text
       weight='light'
-      color={direction === 'incoming' ? black : white}
+      color={direction === 'incoming' ? '#423f3f' : '#ffffff'}
     >
       {value}
     </Text>

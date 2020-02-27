@@ -4,8 +4,6 @@ import React from 'react'
 import type { Node } from 'react'
 import styled from 'styled-components'
 
-import { grayLight, white } from './colors'
-
 const StyledWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -16,7 +14,7 @@ const StyledInputWrapper = styled.div`
   width: 100%;
   height: 40px;
   display: flex;
-  border: 1px solid ${grayLight};
+  border: 1px solid #f6f6ff;
   border-radius: 50px;
   overflow: hidden;
 `
@@ -36,7 +34,7 @@ const StyledIcon = styled.div`
   justify-content: center;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  background-color: ${white};
+  background-color: #ffffff;
 `
 
 type Props = {

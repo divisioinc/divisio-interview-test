@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import searchIcon from '../../assets/search.svg'
 
 import { IsLoading, Input, Blankslate } from '../../style-guide'
-import { smoke, white, graySemiLight } from '../../style-guide/colors'
 
 import api from '../../utils/api'
 
@@ -15,8 +14,8 @@ import ConversationItem from './ConversationItem'
 const StyledConversations = styled.div`
   width: 30%;
   height: 100%;
-  border-right: 1px solid ${smoke};
-  background-color: ${white};
+  border-right: 1px solid #e4ebf9;
+  background-color: #ffffff;
   overflow-y: auto;
   flex-shrink: 0;
 `
@@ -25,7 +24,7 @@ const StyledHeader = styled.div`
   display: flex;
   width: 100%;
   padding: 10px 15px;
-  background-color: ${graySemiLight};
+  background-color: #edeced;
 `
 
 type Props = {
